@@ -8,9 +8,27 @@
     <title>API Usage</title>
   </head>
   <body>
-    <h1>Doggos</h1>
-    <button class="random-doggo">Click for Random Dog!!</button>
+    <h1 class="header">Doggos</h1>
+    <div class="random-doggo-container">
+      <h2>Random Doggos!</h2>
+      <button class="random-doggo">Click for Random Dog!!</button>
+    </div>
     <div class="random-doggos"></div>
+
+    <div class="select-doggo-container">
+      <form id="doggo-select">
+        <label for="doggo-select">Select a Breed</label>
+        <select name="doggo">
+          <option value="">---Select a Doggo---</option>
+          <option value="beagle">Beagle</option>
+          <option value="boxer">Boxer</option>
+          <option value="dachshund">Dachshund</option>
+          <option value="pug">Pug</option>
+        </select>
+      </form>
+      <div class="selected-doggos"></div>
+    </div>
+
     <script src="./doggo.js"></script>
   </body>
 </html>
