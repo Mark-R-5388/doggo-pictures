@@ -1,46 +1,43 @@
-const doggos = document.querySelector('.random-doggos');
-const randomButton = document.querySelector('.random-doggo');
-const doggoSelectForm = document.querySelector('#doggo-select');
-const selectedDoggos = document.querySelector('.selected-doggos');
+const doggos = document.querySelector(".random-doggos-container");
+const randomButton = document.querySelector(".random-doggo-button");
+const doggoSelectForm = document.querySelector("#doggo-select");
+const selectedDoggos = document.querySelector(".selected-doggos-container");
+let BREEDS_URL = "https://dog.ceo/api/breeds/image/random";
 
-randomButton.addEventListener('click', function (e) {
-  let BREEDS_URL = 'https://dog.ceo/api/breeds/image/random';
+const dogPicture = fetch("https://dog.ceo/api/breeds/image/random")
+  .then((response) => response.json())
+  .then((dog) => {
+    return dog;
+  });
 
-  let promise = fetch(BREEDS_URL);
-  promise
-    .then(function (response) {
-      let processingPromise = response.json();
+async function getRandomDoggo() {
+  let resolve = await fetch(BREEDS_URL);
+  let json = await resolve.json();
+  return json;
+}
 
-      return processingPromise;
-    })
-    .then(function (processedResponse) {
-      let img = document.createElement('img');
-      img.classList.add('img-size');
-      img.src = processedResponse.message;
-      img.alt = 'doggo';
-      doggos.append(img);
+async function getPicture() {
+  const picture = await getRandomDoggo();
+  return picture;
+}
+
+randomButton.addEventListener("click", async function () {
+  let doggoList = [];
+  let pictureValue = await getPicture();
+
+  let imgEl = document.createElement("img");
+  imgEl.classList.add("img-size");
+  imgEl.src = `${pictureValue.message}`;
+
+  if (doggos.children.length === 0) {
+    doggoList.push(imgEl);
+    console.log(doggoList);
+    doggoList.forEach((doggo) => {
+      doggos.append(doggo);
     });
-});
-
-doggoSelectForm.addEventListener('change', function (e) {
-  e.preventDefault();
-  let breedSelected = e.target.value;
-  let BREED_SELECT_URL = `https://dog.ceo/api/breed/${breedSelected}/images`;
-
-  let promise = fetch(BREED_SELECT_URL);
-
-  promise
-    .then(function (response) {
-      let processedResponse = response.json();
-      return processedResponse;
-    })
-    .then(function (newResponse) {
-      let randomIndexToFive = Math.floor(Math.random() * 5);
-      let img = document.createElement('img');
-      img.classList.add('img-size');
-      img.src = newResponse.message[randomIndexToFive];
-      img.alt = `doggo ${randomIndexToFive}`;
-      selectedDoggos.append(img);
-      e.target.value = '';
-    });
+  } else {
+    doggoList.pop();
+    doggoList.push(imgEl);
+    console.log(doggoList);
+  }
 });

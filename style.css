@@ -15,14 +15,23 @@ body {
   background-color: blue;
   text-align: center;
 }
-.random-doggo-container {
+.random-doggo-header {
   border: 1px solid black;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.random-doggo {
+.random-doggos-container {
+  width: 300px;
+  height: 400px;
+  border: 10px solid black;
+  outline: 10px solid green;
+  margin: 20px auto;
+  
+}
+
+.random-doggo-button {
   margin-left: 50px;
   padding: 10px 15px;
   font-size: 20px;
